@@ -1,0 +1,62 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+  <st:header name="Content-Type" value="text/html;charset=UTF-8"/>
+
+  <style type="text/css">
+    .tip {
+    color: #666666;
+    font-size: 0.95em;
+    margin-bottom: 40px;
+    }
+  </style>
+
+  <f:section title="Database package to sync">
+    <f:block><span class="tip">Enter the ID of the package you want to use to update the target database. The ID must be for a package built by Red Gate SQL CI.</span></f:block>
+    <f:entry title="Package ID:" field="packageid">
+      <f:textbox/>
+    </f:entry>
+  </f:section>
+
+  <f:section title="Target database">
+    <f:block><span class="tip">Red Gate SQL CI will update the target database you specify here.</span></f:block>
+    <f:entry title="Server:" field="serverName">
+      <f:textbox/>
+    </f:entry>
+    <f:entry title="Database:" field="dbName">
+      <f:textbox/>
+    </f:entry>
+    <f:radioBlock name="serverAuth" title="Windows Authentication" value="windowsAuth" checked="${instance.serverAuth == null || instance.serverAuth == 'windowsAuth'}"/>
+    <f:radioBlock name="serverAuth" title="SQL Server Authentication" value="sqlServerAuth" checked="${!(instance.serverAuth == null || instance.serverAuth == 'windowsAuth')}">
+      <f:nested>
+        <f:entry title="Username:" field="username">
+          <f:textbox/>
+        </f:entry>
+        <f:entry title="Password:" field="password">
+          <f:password/>
+        </f:entry>
+      </f:nested>
+    </f:radioBlock>
+  </f:section>
+
+
+  <f:section title="Advanced Options">
+
+    <f:block>
+      <f:block>
+        <span class="tip">Specify SQL Compare switches to run on the command line.</span>
+        <a href="http://www.red-gate.com/teamcityplugin/help/clsyntax" target="_blank" style="margin-left:20px;margin-right:20px;">Syntax</a>
+        <a href="http://www.red-gate.com/teamcityplugin/help/clexamples" target="_blank">Examples</a>
+      </f:block>
+      <f:entry title="Additional parameters:" field="additionalParams">
+        <f:textbox/>
+      </f:entry>
+      <f:block>
+
+      </f:block>
+    </f:block>
+
+  </f:section>
+
+</j:jelly>

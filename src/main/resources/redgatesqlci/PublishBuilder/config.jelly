@@ -1,0 +1,20 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+  <f:section title="Package to publish">
+    <f:entry title="Package ID:" field="packageid">
+      <f:textbox/>
+    </f:entry>
+  </f:section>
+
+  <f:section title="NuGet Feed">
+    <f:entry title="NuGet Feed URL:" field="nugetFeedUrl">
+      <f:textbox/>
+    </f:entry>
+    <f:entry title="NuGet Feed API Key:" field="nugetFeedApiKey">
+      <f:textbox/>
+    </f:entry>
+  </f:section>
+
+
+</j:jelly>

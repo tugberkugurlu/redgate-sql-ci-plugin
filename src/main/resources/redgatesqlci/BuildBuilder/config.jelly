@@ -1,0 +1,84 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+    <st:header name="Content-Type" value="text/html;charset=UTF-8"/>
+
+    <style type="text/css">
+        .tip {
+        color: #666666;
+        font-size: 0.95em;
+        margin-bottom: 40px;
+        }
+    </style>
+
+    <f:section title="Source-controlled database" >
+        <f:radioBlock name="dbFolder" title="Database folder is in my build VCS root" value="vcsroot" checked="${instance.dbFolder == null || instance.dbFolder == 'vcsroot'}" />
+        <f:radioBlock name="dbFolder" title="Database folder is a subfolder of my VCS root" value="subfolder" checked="${!(instance.dbFolder == null || instance.dbFolder == 'vcsroot')}">
+            <f:nested>
+                <f:entry title="Subfolder location:" field="subfolder">
+                    <f:textbox/>
+                </f:entry>
+                <f:block>
+                    <span class="tip">Enter a path relative to your VCS root. For instance, if your scripts-folder is D:\MyRepository\DatabaseStuff\Scripts, enter \DatabaseStuff\Scripts.</span>
+                </f:block>
+            </f:nested>
+        </f:radioBlock>
+    </f:section>
+
+    <f:section title="Output package">
+        <f:entry title="Package ID:" field="packageid">
+            <f:textbox/>
+        </f:entry>
+    </f:section>
+
+    <f:section title="Temporary database server">
+        <f:block>
+            <span class="tip">Red Gate SQL CI will recreate and validate your database on a temporary server.</span>
+        </f:block>
+
+        <f:radioBlock name="tempServer" title="SQL LocalDB (recommended)" value="localdb" checked="${instance.tempServer == null || instance.tempServer == 'localdb'}"/>
+        <f:radioBlock name="tempServer" title="SQL Server" value="sqlServer"  checked="${!(instance.tempServer == null || instance.tempServer == 'localdb')}">
+            <f:nested>
+                <f:entry title="Server:" field="serverName">
+                    <f:textbox/>
+                </f:entry>
+                <f:entry title="Database:" field="dbName">
+                    <f:textbox/>
+                </f:entry>
+                <f:radioBlock name="serverAuth" title="Windows Authentication" value="windowsAuth"  checked="${instance.serverAuth == null || instance.serverAuth == 'windowsAuth'}"/>
+                <f:radioBlock name="serverAuth" title="SQL Server Authentication" value="sqlServerAuth"  checked="${!(instance.serverAuth == null || instance.serverAuth == 'windowsAuth')}">
+                    <f:nested>
+                        <f:entry title="Username:" field="username">
+                            <f:textbox/>
+                        </f:entry>
+                        <f:entry title="Password:" field="password">
+                            <f:password/>
+                        </f:entry>
+                    </f:nested>
+                </f:radioBlock>
+            </f:nested>
+        </f:radioBlock>
+
+    </f:section>
+
+    <f:section title="Advanced Options">
+
+        <f:block>
+            <f:block>
+                <span class="tip">Specify SQL Compare switches to run on the command line.</span>
+                <a href="http://www.red-gate.com/teamcityplugin/help/clsyntax" target="_blank" style="margin-left:20px;margin-right:20px;">Syntax</a>
+                <a href="http://www.red-gate.com/teamcityplugin/help/clexamples" target="_blank">Examples</a>
+            </f:block>
+            <f:entry title="Additional parameters:" field="additionalParams">
+                <f:textbox/>
+            </f:entry>
+            <f:block>
+
+            </f:block>
+        </f:block>
+
+    </f:section>
+
+</j:jelly>
+
