@@ -16,12 +16,12 @@
   <packaging>hpi</packaging>
 
   <name>Redgate SQL CI</name>
-  <url>https://wiki.jenkins-ci.org/display/JENKINS/redgatesqlci</url>
-  <description>Build, test, sync and publish your databases using Redgate SQL CI technology.</description>
+  <url>https://wiki.jenkins-ci.org/display/JENKINS/Redgate+SQL+CI+Plugin</url>
+  <description>Build, test, sync and publish your databases using Redgate SQL CI.</description>
   <licenses>
     <license>
       <name>Apache 2</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+      <url>http://www.red-gate.com/assets/purchase/assets/open-source-EULA.pdf</url>
     </license>
   </licenses>
 
