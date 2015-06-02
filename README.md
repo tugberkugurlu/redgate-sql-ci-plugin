@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Redgate SQL CI Bamboo Plugin is an open-source Jenkins plugin for using [Redgate SQL CI](http://documentation.red-gate.com/display/SCI1/SQL+CI+documentation) from within Jenkins. Four tasks are available:
+The Redgate SQL CI Plugin is an open-source plugin for using [Redgate SQL CI](http://documentation.red-gate.com/display/SCI1/SQL+CI+documentation) from within Jenkins. Four tasks are available:
 
 1. Build your database from a [Redgate SQL Source Control](http://documentation.red-gate.com/display/SOC3/SQL+Source+Control+3+documentation) source folder to a nuget package.
 2. Test your database by running the tSQLt tests in the package.
@@ -14,7 +14,7 @@ If you just want to use the plugin, follow these instructions:
 
 1. Contact dlm@red-gate.com for the latest plugin file.
 2. Stop Jenkins.
-3. Copy `redgatesqlci.hpi` to `C:\Jenkins\war\WEB-INF\plugins`
+3. Copy `redgate-sql-ci.hpi` to `C:\Jenkins\war\WEB-INF\plugins`
 4. Start Jenkins.
 
 ## How to build/debug the plugin.
