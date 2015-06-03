@@ -12,10 +12,9 @@ The Redgate SQL CI Plugin is an open-source plugin for using [Redgate SQL CI](ht
 ## Installing
 If you just want to use the plugin, follow these instructions:
 
-1. Contact dlm@red-gate.com for the latest plugin file.
-2. Stop Jenkins.
-3. Copy `redgate-sql-ci.hpi` to `C:\Jenkins\war\WEB-INF\plugins`
-4. Start Jenkins.
+1. Open your Jenkins.
+2. Go to Manage Jenkins > Manage Plugins> Available and search for Redgate.
+3. Tick the Redgate SQL CI Plugin, and click 'Install Without Restart'
 
 ## How to build/debug the plugin.
 A basic tutorial for developing plugins is at [https://wiki.jenkins-ci.org/display/JENKINS/Plugin+tutorial](https://wiki.jenkins-ci.org/display/JENKINS/Plugin+tutorial).
