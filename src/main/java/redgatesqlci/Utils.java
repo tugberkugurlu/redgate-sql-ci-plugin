@@ -17,16 +17,22 @@ public class Utils {
         String sqlCiLocation = "";
         String allLocations = "";
         String[] possibleSqlCiLocations =
-               { System.getenv("ProgramFiles") + "\\Red Gate\\SQL Automation Pack 1\\sqlCI\\sqlci.exe",
-                 System.getenv("ProgramFiles") +  "\\Red Gate\\sqlCI\\sqlci.exe",
-                 System.getenv("ProgramFiles(X86)") +  "\\Red Gate\\SQL Automation Pack 1\\sqlCI\\sqlci.exe",
-                 System.getenv("ProgramFiles(X86)") +  "\\Red Gate\\sqlCI\\sqlci.exe"
+               {
+                       System.getenv("DLMAS_HOME") +  "sqlCI\\sqlci.exe",
+                       System.getenv("ProgramFiles") + "\\Red Gate\\DLM Automation Suite 1\\sqlCI\\sqlci.exe",
+                       System.getenv("ProgramFiles") + "\\Red Gate\\SQL Automation Pack 1\\sqlCI\\sqlci.exe",
+                       System.getenv("ProgramFiles") + "\\Red Gate\\sqlCI\\sqlci.exe",
+                       System.getenv("ProgramFiles(X86)") + "\\Red Gate\\DLM Automation Suite 1\\sqlCI\\sqlci.exe",
+                       System.getenv("ProgramFiles(X86)") +  "\\Red Gate\\SQL Automation Pack 1\\sqlCI\\sqlci.exe",
+                       System.getenv("ProgramFiles(X86)") +  "\\Red Gate\\sqlCI\\sqlci.exe"
                } ;
 
         for(String possibleLocation : possibleSqlCiLocations)
         {
-            if(new File(possibleLocation).isFile())
+            if(new File(possibleLocation).isFile()) {
                 sqlCiLocation = possibleLocation;
+                break;
+            }
             allLocations = allLocations.concat(possibleLocation + "  ");
         }
 
