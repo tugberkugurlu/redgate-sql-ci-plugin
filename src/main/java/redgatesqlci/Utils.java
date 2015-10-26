@@ -46,13 +46,36 @@ public class Utils {
 
         ArrayList<String> procParams = new ArrayList<String>();
         procParams.add(sqlCiLocation);
-        procParams.addAll(params);
+
+        String longString = sqlCiLocation;
+
+        // Here we do some parameter fiddling. Existing quotes must be escaped.
+        // Then, we need to surround the part on the right of the = with quotes iff it has a space.
+        for(String param : params)
+        {
+            // Trailing spaces can be a problem, so trim string.
+            String fixedParam = param.trim();
+
+            // Put 3 slashes before quotes (argh!!!!)
+            if(fixedParam.contains("\""))
+                fixedParam = fixedParam.replace("\"", "\\\\\\\"");
+
+            // If there are spaces, surround bit after = with quotes
+            if(fixedParam.contains(" "))
+            {
+                int equalsPlace = fixedParam.indexOf("=");
+                fixedParam = fixedParam.substring(0, equalsPlace + 1) +  "\\\"" + fixedParam.substring(equalsPlace + 1, fixedParam.length()) + "\\\"";
+            }
+
+            procParams.add(param);
+            longString += " " + fixedParam;
+        }
 
         // Run SQL CI with parameters. Send output and error streams to logger.
-
         Proc proc = null;
         Launcher.ProcStarter procStarter = launcher.new ProcStarter();
-        procStarter.cmds(procParams).stdout(listener.getLogger()).stderr(listener.getLogger()).pwd(build.getWorkspace());
+        procStarter.cmdAsSingleString(longString).stdout(listener.getLogger()).stderr(listener.getLogger()).pwd(build.getWorkspace());
+        //procStarter.cmds(procParams).stdout(listener.getLogger()).stderr(listener.getLogger()).pwd(build.getWorkspace());
 
         try {
             proc = launcher.launch(procStarter);

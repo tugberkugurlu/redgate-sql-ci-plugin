@@ -113,7 +113,7 @@ public class BuildBuilder extends Builder {
         params.add("/packageVersion=0." + build.getNumber());
 
         if (!additionalParams.isEmpty())
-            params.add("/additionalCompareArgs=\"" + getAdditionalParams() + "\"");
+            params.add("/additionalCompareArgs=" + getAdditionalParams());
 
         if (getTempServer().equals("sqlServer")) {
             params.add("/temporaryDatabaseServer=" + getServerName());

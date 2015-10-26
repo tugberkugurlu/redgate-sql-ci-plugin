@@ -84,7 +84,7 @@ public class SyncBuilder extends Builder {
         }
 
         if (!getAdditionalParams().isEmpty())
-            params.add("/additionalCompareArgs=\"" + getAdditionalParams() + "\"");
+            params.add("/additionalCompareArgs=" + getAdditionalParams());
 
         return Utils.runSQLCIWithParams(build, launcher, listener, params);
     }

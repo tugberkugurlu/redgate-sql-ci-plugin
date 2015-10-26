@@ -134,11 +134,11 @@ public class TestBuilder extends Builder {
             params.add("/runOnly=" + getRunOnlyParams());
         }
         if (getGenerateTestData() != null) {
-            params.add("/sqlDataGenerator=\"" + getSqlgenPath() + "\"");
+            params.add("/sqlDataGenerator=" + getSqlgenPath());
         }
 
         if (!getAdditionalParams().isEmpty())
-            params.add("/additionalCompareArgs=\"" + getAdditionalParams() + "\"");
+            params.add("/additionalCompareArgs=" + getAdditionalParams());
 
         return Utils.runSQLCIWithParams(build, launcher, listener, params);
     }
