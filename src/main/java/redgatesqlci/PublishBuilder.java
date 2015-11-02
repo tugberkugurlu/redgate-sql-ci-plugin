@@ -26,23 +26,28 @@ public class PublishBuilder extends Builder {
     public String getNugetFeedUrl() { return nugetFeedUrl;  }
 
     private final String nugetFeedApiKey;
-    public String getNugetFeedApiKey() {
-        return nugetFeedApiKey;
-    }
+    public String getNugetFeedApiKey() { return nugetFeedApiKey;  }
 
+    private final String packageVersion;
+    public String getPackageVersion() { return packageVersion;  }
 
     @DataBoundConstructor
-    public PublishBuilder(String packageid, String nugetFeedUrl, String nugetFeedApiKey) {
+    public PublishBuilder(String packageid, String nugetFeedUrl, String nugetFeedApiKey, String packageVersion) {
         this.packageid = packageid;
         this.nugetFeedUrl = nugetFeedUrl;
         this.nugetFeedApiKey = nugetFeedApiKey;
+        this.packageVersion = packageVersion;
     }
 
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
         ArrayList<String> params = new ArrayList<String>();
 
-        String packageFileName = Utils.constructPackageFileName(getPackageid(), build.getNumber());
+        String buildNumber = "1.0." + Integer.toString(build.getNumber());
+        if(!getPackageVersion().isEmpty())
+            buildNumber = getPackageVersion();
+
+        String packageFileName = Utils.constructPackageFileName(getPackageid(), buildNumber);
 
         params.add("PUBLISH");
         params.add("/package=" + packageFileName);

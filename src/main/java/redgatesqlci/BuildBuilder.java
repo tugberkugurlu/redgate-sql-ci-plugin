@@ -71,8 +71,13 @@ public class BuildBuilder extends Builder {
         return additionalParams;
     }
 
+    private final String packageVersion;
+    public String getPackageVersion() {
+        return packageVersion;
+    }
+
     @DataBoundConstructor
-    public BuildBuilder(DbFolder dbFolder, String packageid, Server tempServer, String additionalParams) {
+    public BuildBuilder(DbFolder dbFolder, String packageid, Server tempServer, String additionalParams, String packageVersion) {
         this.dbFolder = dbFolder.getvalue();
         this.subfolder = dbFolder.getsubfolder();
         this.packageid = packageid;
@@ -95,6 +100,7 @@ public class BuildBuilder extends Builder {
         }
 
         this.additionalParams = additionalParams;
+        this.packageVersion = packageVersion;
     }
 
     @Override
@@ -110,7 +116,11 @@ public class BuildBuilder extends Builder {
             params.add("/scriptsFolder=" + checkOutPath.getRemote());
         }
         params.add("/packageId=" + getPackageid());
-        params.add("/packageVersion=0." + build.getNumber());
+
+        if(!getPackageVersion().isEmpty())
+            params.add("/packageVersion=" + getPackageVersion());
+        else
+            params.add("/packageVersion=1.0." + build.getNumber());
 
         if (!additionalParams.isEmpty())
             params.add("/additionalCompareArgs=" + getAdditionalParams());

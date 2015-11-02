@@ -73,8 +73,11 @@ public class TestBuilder extends Builder {
     private final String sqlgenPath;
     public String getSqlgenPath() { return sqlgenPath; }
 
+    private final String packageVersion;
+    public String getPackageVersion() { return packageVersion;  }
+
     @DataBoundConstructor
-    public TestBuilder(String packageid, Server tempServer, RunTestSet runTestSet, GenerateTestData generateTestData, String additionalParams) {
+    public TestBuilder(String packageid, Server tempServer, RunTestSet runTestSet, GenerateTestData generateTestData, String additionalParams, String packageVersion) {
 
         this.packageid = packageid;
         this.tempServer = tempServer.getvalue();
@@ -109,13 +112,18 @@ public class TestBuilder extends Builder {
             this.sqlgenPath = "";
 
         this.additionalParams = additionalParams;
+        this.packageVersion = packageVersion;
     }
 
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
         ArrayList<String> params = new ArrayList<String>();
 
-        String packageFileName = Utils.constructPackageFileName(getPackageid(), build.getNumber());
+        String buildNumber = "1.0." + Integer.toString(build.getNumber());
+        if(!getPackageVersion().isEmpty())
+            buildNumber = getPackageVersion();
+
+        String packageFileName = Utils.constructPackageFileName(getPackageid(), buildNumber);
 
         params.add("TEST");
         params.add("/package=" + packageFileName);

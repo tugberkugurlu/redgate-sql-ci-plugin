@@ -16,5 +16,8 @@
     </f:entry>
   </f:section>
 
+  <f:entry title="Package version:" field="packageVersion">
+    <f:textbox/>
+  </f:entry>
 
 </j:jelly>

@@ -55,8 +55,11 @@ public class SyncBuilder extends Builder {
         return additionalParams;
     }
 
+    private final String packageVersion;
+    public String getPackageVersion() { return packageVersion;  }
+
     @DataBoundConstructor
-    public SyncBuilder(String packageid, String serverName, String dbName, ServerAuth serverAuth, String additionalParams) {
+    public SyncBuilder(String packageid, String serverName, String dbName, ServerAuth serverAuth, String additionalParams, String packageVersion) {
         this.packageid = packageid;
         this.serverName = serverName;
         this.dbName = dbName;
@@ -64,13 +67,18 @@ public class SyncBuilder extends Builder {
         this.username = serverAuth.getUsername();
         this.password = serverAuth.getPassword();
         this.additionalParams = additionalParams;
+        this.packageVersion = packageVersion;
     }
 
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
         ArrayList<String> params = new ArrayList<String>();
 
-        String packageFileName = Utils.constructPackageFileName(getPackageid(), build.getNumber());
+        String buildNumber = "1.0." + Integer.toString(build.getNumber());
+        if(!getPackageVersion().isEmpty())
+            buildNumber = getPackageVersion();
+
+        String packageFileName = Utils.constructPackageFileName(getPackageid(), buildNumber);
 
         params.add("SYNC");
         params.add("/package=" + packageFileName);

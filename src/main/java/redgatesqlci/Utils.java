@@ -1,5 +1,6 @@
 package redgatesqlci;
 
+import hudson.EnvVars;
 import hudson.Launcher;
 import hudson.Proc;
 import hudson.model.AbstractBuild;
@@ -8,6 +9,8 @@ import hudson.model.BuildListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Utils {
     public static boolean runSQLCIWithParams(AbstractBuild build, Launcher launcher, BuildListener listener, Collection<String> params)
@@ -43,13 +46,12 @@ public class Utils {
         }
 
         // Set up arguments
-
         ArrayList<String> procParams = new ArrayList<String>();
         procParams.add(sqlCiLocation);
 
         String longString = sqlCiLocation;
 
-        // Here we do some parameter fiddling. Existing quotes must be escaped.
+        // Here we do some parameter fiddling. Existing quotes must be escaped with three slashes
         // Then, we need to surround the part on the right of the = with quotes iff it has a space.
         for(String param : params)
         {
@@ -71,11 +73,25 @@ public class Utils {
             longString += " " + fixedParam;
         }
 
-        // Run SQL CI with parameters. Send output and error streams to logger.
+        // Run SQL CI with parameters. Send output and error streams to logger.Map<String, String> vars = new HashMap<String, String>();
+        Map<String, String> vars = new HashMap<String, String>();
+        vars.putAll(build.getBuildVariables());
+
+
         Proc proc = null;
         Launcher.ProcStarter procStarter = launcher.new ProcStarter();
+
+        // Set process environment variables to system environment variables. This shouldn't be necessary!
+        EnvVars envVars = new EnvVars();
+        try {
+            envVars = build.getEnvironment(listener);
+            vars.putAll(envVars);
+        }
+        catch (java.io.IOException e) {}
+        catch (java.lang.InterruptedException e) {}
+        procStarter.envs(vars);
+
         procStarter.cmdAsSingleString(longString).stdout(listener.getLogger()).stderr(listener.getLogger()).pwd(build.getWorkspace());
-        //procStarter.cmds(procParams).stdout(listener.getLogger()).stderr(listener.getLogger()).pwd(build.getWorkspace());
 
         try {
             proc = launcher.launch(procStarter);
@@ -92,8 +108,9 @@ public class Utils {
         }
     }
 
-    public static String constructPackageFileName(String packageName, int buildNumber)
+    public static String constructPackageFileName(String packageName, String buildNumber)
     {
-        return packageName + ".0." + buildNumber + ".nupkg";
+        return packageName + "." + buildNumber + ".nupkg";
     }
+
 }

@@ -82,6 +82,9 @@
       <f:entry title="Additional parameters:" field="additionalParams">
         <f:textbox/>
       </f:entry>
+      <f:entry title="Package version:" field="packageVersion">
+        <f:textbox/>
+      </f:entry>
     </f:block>
   </f:section>
 
