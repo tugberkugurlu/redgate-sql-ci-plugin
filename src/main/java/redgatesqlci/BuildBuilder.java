@@ -117,10 +117,10 @@ public class BuildBuilder extends Builder {
         }
         params.add("/packageId=" + getPackageid());
 
-        if(!getPackageVersion().isEmpty())
-            params.add("/packageVersion=" + getPackageVersion());
-        else
+        if(getPackageVersion() == null || getPackageVersion().isEmpty())
             params.add("/packageVersion=1.0." + build.getNumber());
+        else
+            params.add("/packageVersion=" + getPackageVersion());
 
         if (!additionalParams.isEmpty())
             params.add("/additionalCompareArgs=" + getAdditionalParams());

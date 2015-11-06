@@ -44,7 +44,7 @@ public class PublishBuilder extends Builder {
         ArrayList<String> params = new ArrayList<String>();
 
         String buildNumber = "1.0." + Integer.toString(build.getNumber());
-        if(!getPackageVersion().isEmpty())
+        if(getPackageVersion() != null && !getPackageVersion().isEmpty())
             buildNumber = getPackageVersion();
 
         String packageFileName = Utils.constructPackageFileName(getPackageid(), buildNumber);
