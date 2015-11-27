@@ -83,5 +83,30 @@
 
     </f:section>
 
+    <f:section title="DLM Dashboard integration">
+
+        <f:block>
+            <f:block>
+            DLM Dashboard monitors your database schemas and alerts you to database drift. Don't have DLM Dashboard? <a href="http://www.red-gate.com/products/dlm/dlm-dashboard/" target="_blank">Download it here</a>
+            </f:block>
+
+
+            <f:optionalBlock field="dlmDashboard" checked="${instance.dlmDashboard == null}" title="Send schema information to DLM Dashboard">
+
+                <f:entry title="DLM Dashboard host:" field="dlmDashboardHost">
+                    <f:textbox/>
+                </f:entry>
+                <f:entry title="DLM Dashboard port:" field="dlmDashboardPort">
+                    <f:textbox/>
+                </f:entry>
+
+            </f:optionalBlock>
+
+        </f:block>
+
+    </f:section>
+
+
+
 </j:jelly>
 

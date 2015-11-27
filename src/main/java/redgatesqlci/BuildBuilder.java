@@ -76,8 +76,24 @@ public class BuildBuilder extends Builder {
         return packageVersion;
     }
 
+    private final boolean sendToDlmDashboard;
+    public boolean getSendToDlmDashboard() {
+        return sendToDlmDashboard;
+    }
+
+    private final String dlmDashboardHost;
+    public String getDlmDashboardHost() {
+        return dlmDashboardHost;
+    }
+
+    private final String dlmDashboardPort;
+    public String getDlmDashboardPort() {
+        return dlmDashboardPort;
+    }
+
+
     @DataBoundConstructor
-    public BuildBuilder(DbFolder dbFolder, String packageid, Server tempServer, String additionalParams, String packageVersion) {
+    public BuildBuilder(DbFolder dbFolder, String packageid, Server tempServer, String additionalParams, String packageVersion, DlmDashboard dlmDashboard) {
         this.dbFolder = dbFolder.getvalue();
         this.subfolder = dbFolder.getsubfolder();
         this.packageid = packageid;
@@ -101,6 +117,17 @@ public class BuildBuilder extends Builder {
 
         this.additionalParams = additionalParams;
         this.packageVersion = packageVersion;
+
+        this.sendToDlmDashboard = dlmDashboard != null;
+        if(getSendToDlmDashboard()) {
+            this.dlmDashboardHost = dlmDashboard.getDlmDashboardHost();
+            this.dlmDashboardPort = dlmDashboard.getDlmDashboardPort();
+        }
+        else
+        {
+            this.dlmDashboardHost = null;
+            this.dlmDashboardPort = null;
+        }
     }
 
     @Override
@@ -133,6 +160,11 @@ public class BuildBuilder extends Builder {
                 params.add("/temporaryDatabaseUserName=" + getUsername());
                 params.add("/temporaryDatabasePassword=" + getPassword());
             }
+        }
+
+        if (getSendToDlmDashboard()) {
+            params.add("/dlmDashboardHost=" + getDlmDashboardHost());
+            params.add("/dlmDashboardPort=" + getDlmDashboardPort());
         }
 
         return Utils.runSQLCIWithParams(build, launcher, listener, params);
