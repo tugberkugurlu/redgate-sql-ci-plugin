@@ -21,7 +21,7 @@ public class Utils {
         String allLocations = "";
         String[] possibleSqlCiLocations =
                {
-                       System.getenv("DLMAS_HOME") +  "sqlCI\\sqlci.exe",
+                       System.getenv("DLMAS_HOME") +  "\\sqlCI\\sqlci.exe",
                        System.getenv("ProgramFiles") + "\\Red Gate\\DLM Automation Suite 1\\sqlCI\\sqlci.exe",
                        System.getenv("ProgramFiles") + "\\Red Gate\\SQL Automation Pack 1\\sqlCI\\sqlci.exe",
                        System.getenv("ProgramFiles") + "\\Red Gate\\sqlCI\\sqlci.exe",
